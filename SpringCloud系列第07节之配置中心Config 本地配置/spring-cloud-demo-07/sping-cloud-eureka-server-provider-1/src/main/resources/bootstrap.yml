@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    config:
+      #uri: http://127.0.0.1:4100/  # 指定配置中心的地址
+      profile: dev                 # 指定配置中心配置文件的{profile}
+      name: sping_cloud_eureka_server_provider_1 # 指定配置中心配置文件的{application}
+      #高可用配置中心通过服务Id去自动发现config-server服务组
+      discovery:
+        enabled: true
+        service-id: sping-cloud-eureka-config
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:1100/eureka/
