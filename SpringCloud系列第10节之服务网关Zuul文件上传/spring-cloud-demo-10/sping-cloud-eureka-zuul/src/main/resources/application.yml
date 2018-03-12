@@ -1,0 +1,50 @@
+server:
+  port: 3100
+
+zuul:
+  ignored-services: "*"
+  routes:
+    sping-cloud-eureka-server-upload: /upload-proxy/**
+    spring-cloud-eureka-client-consumer-ribbon: /consumer-ribbon-proxy/**
+    spring-cloud-eureka-client-consumer-feign: /consumer-feign-proxy/**
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${server.port}  # 在信息列表时显示主机名称
+    prefer-ip-address: true # 访问的路径变为IP地址
+    lease-renewal-interval-in-seconds: 5 # 设置心跳的时间间隔（默认是30秒）
+    lease-expiration-duration-in-seconds: 15 # 如果现在超过了5秒的间隔（默认是90秒）
+  client: # 客户端进行Eureka注册的配置
+    healthcheck:
+      enabled: true   # 开启健康检查（依赖spring-boot-starter-actuator）
+    serviceUrl:
+      defaultZone: http://127.0.0.1:1100/eureka/
+
+info:
+  app.name: sping-cloud-eureka-zuul
+  company.name: com.alen
+  build.artifactId: $project.artifactId$
+  build.version: $project.verson$
+
+spring:
+  application:
+    name: sping-cloud-eureka-zuul
+  http:
+    multipart:
+      enabled: true   # 启用http上传处理
+      max-file-size: 2000MB      # Max file size，默认1M
+      max-request-size: 2500MB   # Max request size，默认10M
+      file-size-threshold: 1MB  # 当上传文件达到1MB的时候进行磁盘写入
+      location: /  # 上传的临时目录
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000

@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    config:
+      #uri: http://127.0.0.1:4100/  # 指定配置中心的地址
+      profile: prod                 # 指定配置中心配置文件的{profile}
+      label: master                 # 指定配置中心配置文件的{label}
+      name: demo.cloud.config # 指定配置中心配置文件的{application}
+      discovery:
+        enabled: true                    # 使用注册中心里面已注册的配置中心
+        serviceId: sping-cloud-eureka-config  # 指定配置中心注册到注册中心的serviceId
+    bus:
+      trace:
+        enabled: true # 开启消息跟踪
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672        # 注意端口是5672，不是15672
+    username: guest
+    password: guest
+
+management:
+  security:
+    enabled: false # 刷新时，关闭安全验证
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:1100/eureka/

@@ -1,0 +1,20 @@
+# 服务提供方1
+server:
+  port: 2100
+
+spring:
+  application:
+    # 指定发布的微服务名（以后调用时，只需该名称即可访问该服务）
+    name: spring-cloud-eureka-client-1
+
+eureka:
+  instance:
+    # 修改显示的微服务名为：应用名称:IP:端口
+    instance-id: ${spring.application.name}:${eureka.instance.ip-address}:${server.port}
+    # 只有prefer-ip-address=true时才会生效
+    ip-address: 192.168.10.118
+    # 设置微服务调用地址为IP优先（缺省为false）
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.10.118:1100/eureka/  # 指定服务注册中心的地址
